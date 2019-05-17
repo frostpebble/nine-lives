@@ -1,0 +1,387 @@
+<!DOCTYPE HTML>
+
+<html>
+
+	<head>
+	
+		<title>Game test</title>
+		<link rel="stylesheet" href="css/bootstrap.css">
+		<link rel="stylesheet" href="css/style.css">
+		<script src="js/jquery-3.1.0.js"></script>
+		<script src="js/bootstrap.js"></script>
+		<script src="js/baseData.js"></script>
+		<script src="js/playerData.js"></script>
+		<script src="js/functions.js"></script>
+		<script src="js/script.js"></script>
+		
+		
+	</head>
+	
+	<body>
+	<div id="container">
+	<div class="row" id="content">
+		<div class="col-md-3">
+			<div class="panel panel-default main-panel">
+			  <div class="panel-heading">
+				<h3 class="panel-title">Stats</h3>
+			  </div>
+			  <div class="panel-body" id="stats-body">
+
+				<h4>Town</h4>
+				<div id="stats-town">
+				Level: <span id="townlvl">1</span><br>
+				Population: <span id="cats">1</span>/<span id="maxpop">5</span><br>
+				Food: <span id="food">0</span>/<span id="maxfood">100</span><br>
+				Science: <span id="science">0</span>/<span id="maxscience">100</span>
+				</div>
+				<hr>
+				
+				<h4>Gathering</h4>
+				<div id="stats-gather">
+				Wood: <span id="wood">0</span>/<span id="maxwood">100</span><br>
+				<div class="hidden">Reeds: <span id="reeds">0</span>/<span id="maxreeds">0</span><br></div>
+				<div class="hidden">Cotton: <span id="cotton">0</span>/<span id="maxcotton">0</span><br></div>
+				<div class="hidden">Leather: <span id="leather">0</span>/<span id="maxleather">0</span><br></div>
+				<div class="hidden">Fish: <span id="fish">0</span>/<span id="maxfish">0</span></div>
+				</div>
+				<hr>
+				
+				<h4>Mining</h4>
+				<div id="stats-mine">
+				<span class="hidden">Stone: <span id="stone">0</span>/<span id="maxstone">100</span><br></span>
+				<span class="hidden">Coal: <span id="coal">0</span>/<span id="maxcoal">0</span><br></span>
+				<span class="hidden">Iron: <span id="iron">0</span>/<span id="maxiron">0</span><br></span>
+				<span class="hidden">Gold: <span id="gold">0</span>/<span id="maxgold">0</span><br></span>
+				<span class="hidden">Emerald: <span id="emerald">0</span>/<span id="maxemerald">0</span></span>
+				</div>
+				<hr>
+				
+				<h4>Crafting</h4>
+				<div id="stats-craft">
+				<span class="hidden">Paper: <span id="paper">0</span><br></span>
+				<span class="hidden">Book: <span id="book">0</span><br></span>
+				<span class="hidden">Torch: <span id="torch">0</span></span>
+				</div>
+
+			  </div>
+			  
+			  <div class="panel-footer">
+				<center><button type="button" class="btn btn-default" data-toggle="modal" data-target="#itemModal">View Tools/Equipment</button></center>
+			  </div>
+
+			</div>
+			
+			<div class="modal" id="itemModal" tabindex="-1" role="dialog">
+				  <div class="modal-dialog" role="document">
+					<div class="modal-content">
+						<center><a href="#" onclick="loadToolList();return false;">All Tools</a> | 
+						<a href="#" onclick="loadEquipList('all');return false;">All Eqipment</a> |
+						<a href="#" onclick="loadEquipList('head');return false;">Head</a> | 
+						<a href="#" onclick="loadEquipList('body');return false;">Body</a> | 
+						<a href="#" onclick="loadEquipList('arms');return false;">Arms</a> | 
+						<a href="#" onclick="loadEquipList('legs');return false;">Legs</a> | 
+						<a href="#" onclick="loadEquipList('feet');return false;">Feet</a> | 
+						<a href="#" onclick="loadEquipList('other');return false;">Other</a> 
+						<br><br>
+						<div id="inventory">
+						--- Choose a category above: ---
+						</div>
+						</center>
+						
+					</div>
+				  </div>
+			</div>
+			
+		</div>
+		
+		<div class="col-md-6">
+			<div class="panel panel-default main-panel">
+			  <div class="panel-heading">
+			  <ul id="tabs" class="nav nav-tabs" data-tabs="tabs">
+				<li class="active"><a href="#tasks" data-toggle="tab">Tasks</a></li>
+				<li><a href="#citizens" data-toggle="tab">Citizens</a></li>
+				<li><a href="#base" data-toggle="tab">Base</a></li>
+				<li><a href="#research" data-toggle="tab">Research</a></li>
+				<li><a href="#crafting" data-toggle="tab">Crafting</a></li>
+				<li><a href="#projects" data-toggle="tab">Projects</a></li>
+				<li><a href="#ref" data-toggle="tab">Reference</a></li>
+			  </ul>
+			  </div>
+			<div class="panel-body vert-scroll">
+			<div class="tab-content">
+			
+				<div class="tab-pane active" id="tasks">
+					Instant action:
+					<button class="btn btn-default" type="submit" id="btnWood" onClick="increaseResource('wood',1)">Gather Wood</button>
+					<button class="btn btn-default" type="submit" id="btnFood" onClick="increaseFood(1)">Gather Food</button>
+					<span class="rightFloat">Free cats: <span id="freeCats">1</span></span>
+					<br><br>
+					
+					<div class="row" id="content">
+						<div class=col-md-2>
+						Explore:
+						</div>
+						<div class=col-md-3>
+						<select class="form-control" id="selZone">
+						  <option>1</option>
+						</select>
+						</div>
+						<div class=col-md-3>
+						<select class="form-control catdropdown" id="selCatExplore">
+		
+						</select>
+						</div>
+						<div class=col-md-4>
+						<button class="btn btn-primary" type="button" id="btnExplore" onClick="sendExplorer($('#selZone option:selected').text(),$('#selCatExplore option:selected').val())">Send Cat</button>
+						</div>
+					</div>
+					<br>
+					
+					<div class="row" id="content">
+						<div class=col-md-2>
+						Mine/Gather: 
+						</div>
+						<div class=col-md-3>
+						<select class="form-control areadropdown" id="selArea">
+
+						</select>
+						</div>
+						<div class=col-md-3>
+						<select class="form-control catdropdown" id="selCatArea">
+		
+						</select>
+						</div>
+						<div class=col-md-4>
+						<div class="btn-group" role="group">
+							<button class="btn btn-primary" type="button" id="btnNewTask" onClick="newTask($('#selArea option:selected').val(),$('#selCatArea option:selected').val(),1,1)">Send Cat</button>
+	
+						<div class="btn-group" role="group">
+							<button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown">
+							  Repeat
+							  <span class="caret"></span>
+							</button>
+							<ul class="dropdown-menu">
+							  <li><a href="#" onClick="newTask($('#selArea option:selected').val(),$('#selCatArea option:selected').val(),5,6)">x5 (6 food)</a></li>
+							  <li><a href="#" onClick="newTask($('#selArea option:selected').val(),$('#selCatArea option:selected').val(),10,12)">x10 (12 food)</a></li>
+							</ul>
+						  </div>
+						</div>
+						</div>
+					</div>
+					<br>
+					
+					<div class="row" id="content">
+						<div class=col-md-2>
+						Research: 
+						</div>
+						<div class=col-md-3>
+						<select class="form-control" id="selSciLvl">
+						  <option>1</option>
+						</select>
+						</div>
+						
+						<div class=col-md-3>
+						<select class="form-control catdropdown" id="selCatSci">
+		
+						</select>
+						</div>
+						<div class=col-md-4>
+						<button class="btn btn-primary" type="button" id="btnSci" onClick="newResearch($('#selSciLvl option:selected').val(), $('#selCatSci option:selected').val())">Assign Cat</button>
+						</div>
+					</div>
+					<br>
+
+					<h4>Active Tasks</h4>
+					<div id="tasklist"></div>
+				</div>
+				
+				
+				
+				<div class="tab-pane" id="citizens">
+					
+					Filter: <a href="#" onclick="loadCatList('all');return false;">All</a> | 
+					<a href="#" onclick="loadCatList('busy');return false;">Busy</a> | 
+					<a href="#" onclick="loadCatList('free');return false;">Free</a>
+					<br>
+				
+					<div id="catList">
+					</div>
+					
+					<div class="modal" id="equipModal" tabindex="-1" role="dialog">
+					  <div class="modal-dialog" role="document">
+						<div class="modal-content">
+							<span id="cat-id"></span>
+							<img src="img/avatar_placeholder.png" id="tempAvatar" style="float:left">
+							<div id="cat-info"></div>
+							<table id="equip-select">
+							<tr>
+								<th></th>
+								<th></th>
+								<th>ATK</th>
+								<th>DEF</th>
+							<tr>
+								<td>Tool:</td>
+								<td><select class="form-control selEquip" id="sel-tool"><option value="none" selected>None</option></select></td>
+								<td class="atk"></td>
+								<td class="def"></td>
+							</tr>
+							<tr>
+								<td>Head:</td>
+								<td><select class="form-control selEquip" id="sel-head"><option value="none" selected>None</option></td>
+								<td class="atk"></td>
+								<td class="def"></td>
+							</tr>
+							<tr>
+								<td>Body:</td>
+								<td><select class="form-control selEquip" id="sel-body"><option value="none" selected>None</option></td>
+								<td class="atk"></td>
+								<td class="def"></td>
+							</tr>
+							<tr>
+								<td>Arms:</td>
+								<td><select class="form-control selEquip" id="sel-arms"><option value="none" selected>None</option></td>
+								<td class="atk"></td>
+								<td class="def"></td>
+							</tr>
+							<tr>
+								<td>Legs:</td>
+								<td><select class="form-control selEquip" id="sel-legs"><option value="none" selected>None</option></td>
+								<td class="atk"></td>
+								<td class="def"></td>
+							</tr>
+							<tr>
+								<td>Feet:</td>
+								<td><select class="form-control selEquip" id="sel-feet"><option value="none" selected>None</option></td>
+								<td class="atk"></td>
+								<td class="def"></td>
+							</tr>
+							<tr>
+								<td>Other:</td>
+								<td><select class="form-control selEquip" id="sel-other"><option value="none" selected>None</option></td>
+								<td class="atk"></td>
+								<td class="def"></td>
+							</tr>
+							</table>
+							<br>
+							
+							<div class="modal-footer">
+								<button type="button" class="btn btn-default" data-dismiss="modal" onClick="resetEquips()">Close</button>
+								<button type="button" class="btn btn-primary" data-dismiss="modal" onClick="saveEquips()">Save changes</button>
+							</div>
+						</div>
+					  </div>
+						
+					</div>
+					
+				</div>
+				
+				
+				<div class="tab-pane" id="base">
+					Player stats, achievements, and prestige options will go here
+				</div>
+				
+				
+				
+				<div class="tab-pane" id="research">
+					<div id="researchList">
+					</div>
+				</div>
+				
+				
+				
+				<div class="tab-pane" id="crafting">
+				Filter: 
+				<a href="#" onclick="filterCrafting('all');return false;">All</a> | 
+				<a href="#" onclick="filterCrafting('food');return false;">Food</a> | 
+				<a href="#" onclick="filterCrafting('materials');return false;">Materials</a> | 
+				<a href="#" onclick="filterCrafting('tools');return false;">Tools</a> | 
+				<a href="#" onclick="filterCrafting('eqipment');return false;">Equipment</a> 
+					<div id="craftingList">
+					
+					</div>
+				</div>
+				
+				
+				
+				<div class="tab-pane" id="projects">
+				Filter: 
+				<a href="#" onclick="filterProjects('all');return false;">All</a> | 
+				<a href="#" onclick="filterProjects('housing');return false;">Housing</a> | 
+				<a href="#" onclick="filterProjects('storage');return false;">Storage</a> | 
+				<a href="#" onclick="filterProjects('inventory');return false;">Inventory</a> | 
+				<a href="#" onclick="filterProjects('science');return false;">Science</a> | 
+					<div id="projectList">
+					
+					</div>
+					
+				</div>
+				
+				
+				
+				<div class="tab-pane" id="ref">
+					<ul id="ref-tabs" class="nav nav-tabs" data-tabs="tabs">
+						<li class="active"><a href="#map" data-toggle="tab">Map</a></li>
+						<li><a href="#tribes" data-toggle="tab">Tribes</a></li>
+						<li><a href="#bestiary" data-toggle="tab">Bestiary</a></li>
+					</ul>
+					
+					<div class="tab-content">
+						<div class="tab-pane active" id="map">
+							<div id="zone0">Base Camp<span class="rightFloat">Travel time: instant</span><hr></div>
+							<div id="zone1" class="hidden">Zone 1<span class="rightFloat">Max. Areas: 4 | Travel time: .5 days</span><hr></div>
+							<div id="zone2" class="hidden">Zone 2<hr></div>
+							<div id="zone3" class="hidden">Zone 3<hr></div>
+							<div id="zone4" class="hidden">Zone 4<hr></div>
+							<div id="zone5" class="hidden">Zone 5<hr></div>
+
+						</div> 
+						
+						<div class="tab-pane" id="tribes">
+						other tribes
+						</div>
+						
+						<div class="tab-pane" id="bestiary">
+						enemies
+						</div>
+					</div>
+					
+				</div>
+			</div>
+			</div>
+			</div>
+		</div>
+
+		
+		<div class="col-md-3">
+			
+			<div class="panel panel-default main-panel">
+			  <div class="panel-heading">
+				<h3 class="panel-title">Log - Day <span id="day">1</span></h3>
+			  </div>
+			  <div class="panel-body">
+			  			  		
+				<h4 class="panel-title" id="avatar-panel"><a role="button" data-toggle="collapse" href="#catimg">Avatar<span class="togglearrow rightFloat glyphicon glyphicon-chevron-up"></span></a></h4>
+				<div class="panel-body panel-collapse collapse in" id="catimg">
+					<img src="img/avatar_placeholder.png" id="mainAvatar">
+				</div>
+				<hr>
+				<div id="log">
+				
+				</div>
+				<a class="rightFloat" id="clear-log">Clear log</a>
+			  </div>
+			</div>
+		</div>
+	</div>
+
+	</div>
+	<div id="footer">
+	footer info test
+	</div>
+	
+	</body>
+	
+	
+
+	
+</html>

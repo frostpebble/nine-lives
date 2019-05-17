@@ -1,0 +1,68 @@
+.tab-content {
+	visible:false;
+}
+
+.main-panel {
+	height: 90%;
+}
+
+.bordered {
+	border: 1px solid;
+	border-radius: 3px;
+	padding: 5px;
+	margin: 5px;
+}
+
+.rightFloat {
+	float: right;
+}
+
+.centerFloat {
+	float: center;
+}
+
+.hidden {
+	visibility: hidden;
+}
+
+hr {
+	margin-top:5px;
+	margin-bottom:10px;
+}
+
+#item-table {
+	width:90%;
+	padding: 5px;
+}
+
+#equip-select {
+	width:60%;
+	padding: 10px;
+	text-align: center;
+}
+
+#log {
+	overflow: auto;
+}
+
+#stats-body {
+	overflow: auto;
+}
+
+.vert-scroll {
+	overflow: auto;
+	height:90%;
+}
+
+#footer {
+	position: absolute;
+	bottom: 0px;
+	right: 20px;
+}
+
+#container {
+	overflow-x: hidden;
+	overflow-y: auto;
+	height: 100vh;
+	
+}
